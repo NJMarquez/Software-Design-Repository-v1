@@ -53,6 +53,8 @@ export default function SignupPage() {
           style={styles.input}
           placeholder=" Enter Password"
           secureTextEntry={true}
+          value={password}
+          onChangeText={handlePasswordChange}
         />
         <TextInput
           style={styles.input}
