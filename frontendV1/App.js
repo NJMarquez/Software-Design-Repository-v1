@@ -1,7 +1,7 @@
-import Routes from './navigator/Routes';
+import Navigator from './navigator/Navigator';
 
 export default function App() {
   return (
-    <Routes/>
+    <Navigator/>
   );
 };

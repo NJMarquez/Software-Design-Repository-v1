@@ -1,7 +1,6 @@
-import { StyleSheet, Button, View, Text, TextInput } from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, TouchableOpacity, View, Text, TextInput } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
-import { useState } from 'react';
-
 
 const LoginPage = () => {
   const navigation = useNavigation();
@@ -54,7 +53,12 @@ const LoginPage = () => {
         {errors.password ? (
           <Text style={styles.errorText}>{errors.password}</Text>
         ) : null}
-        <Button title="Login" color="pink" onPress={handleSubmit} />
+        <TouchableOpacity style={styles.button} onPress={handleSubmit}>
+          <Text style={styles.buttonText}>Login</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate("SignupPage")}>
+          <Text style={styles.signupText}>Don't have an account? Sign up</Text>
+        </TouchableOpacity>
       </View>
     </View>
   );
@@ -65,13 +69,12 @@ export default LoginPage;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
+    justifyContent: 'center',
     paddingHorizontal: 20,
-    backgroundColor: "#f5f5f5",
-    marginTop: 30,
+    backgroundColor: "burlywood",
   },
   form: {
-    backgroundColor: "#B396B8",
+    backgroundColor: "cornsilk",
     padding: 20,
     borderRadius: 10,
     shadowColor: "black",
@@ -82,6 +85,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    width: 500,
+    height: 300,
+    justifyContent: 'space-between',
+    alignSelf: 'center',
   },
   label: {
     fontSize: 12,
@@ -91,7 +98,7 @@ const styles = StyleSheet.create({
   },
   input: {
     height: 40,
-    borderColor: "#ddd",
+    borderColor: "burlywood",
     borderWidth: 1,
     marginBottom: 15,
     padding: 10,
@@ -100,5 +107,23 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
     marginVertical: 5,
+  },
+  button: {
+    backgroundColor: "chocolate",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+    alignSelf: 'center',
+    width: 90,
+  },
+  buttonText: {
+    color: "cornsilk",
+    fontWeight: "bold",
+  },
+  signupText: {
+    marginTop: 10,
+    textAlign: 'center',
+    color: 'blue',
+    textDecorationLine: 'underline',
   },
 });
