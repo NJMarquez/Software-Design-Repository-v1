@@ -32,7 +32,7 @@ export default function Navigator() {
   return (
     <NavigationContainer>
       <Stack.Navigator
-        initialRouteName='SignupPage'
+        initialRouteName='LoginPage'
         screenOptions={{
           headerLeft: () => null,
           headerTitleAlign: 'center',
