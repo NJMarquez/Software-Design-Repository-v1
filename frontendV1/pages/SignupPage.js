@@ -5,11 +5,32 @@ import { useNavigation } from "@react-navigation/native";
 export default function SignupPage() {
   const navigation = useNavigation();
   const [contactNo, setContactNo] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   const handleContactNoChange = (text) => {
     // Remove non-numeric characters from the input
     const formattedText = text.replace(/[^0-9]/g, '');
     setContactNo(formattedText);
+  };
+
+  const handlePasswordChange = (text) => {
+    setPassword(text);
+  };
+
+  const handleConfirmPasswordChange = (text) => {
+    setConfirmPassword(text);
+  };
+
+  const handleSignup = () => {
+    // Perform signup logic here
+    // For example, you can check if password and confirm password match
+    if (password !== confirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+    // Continue with signup process
+    navigation.navigate('LoginPage');
   };
 
   return (
@@ -35,8 +56,14 @@ export default function SignupPage() {
         />
         <TextInput
           style={styles.input}
+          placeholder="Confirm Password"
+          secureTextEntry={true}
+          value={confirmPassword}
+          onChangeText={handleConfirmPasswordChange}
+        />
+        <TextInput
+          style={styles.input}
           placeholder=" Enter Address "
-          numberOfLines={3}
         />
         <TextInput
           style={styles.input}
@@ -45,7 +72,7 @@ export default function SignupPage() {
           value={contactNo}
           onChangeText={handleContactNoChange}
         />
-        <TouchableOpacity style={styles.button} onPress={() => navigation.navigate("LoginPage")}>
+        <TouchableOpacity style={styles.button} onPress={handleSignup}>
           <Text style={styles.buttonText}>Create Account</Text>
         </TouchableOpacity>
       </View>
@@ -84,6 +111,7 @@ const styles = StyleSheet.create({
     color: 'slategray',
     fontWeight: '600',
     marginVertical: 10,
+    paddingHorizontal: 5,
   },
   button: {
     backgroundColor: "chocolate",
