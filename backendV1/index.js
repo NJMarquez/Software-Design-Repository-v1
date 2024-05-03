@@ -1,10 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
-const nodemailer = require('nodemailer');
 require('dotenv').config();
 require('./models/db');
-// const userRouter = require('./routes/Login');
+const Router = require('./routes/QuickGasRoute');
 const app = express();
 const port = 8000;
 
@@ -15,11 +14,7 @@ app.use(cors({
     credentials: true,
   }));
 app.use(express.json());
-// app.use(userRouter);
-
-app.get('/test', (req, res) => {
-    res.send('Testing Only')
-})
+app.use(Router);
 
 app.get('/', (req, res) => {
     res.json({ success: true, message: 'Welcome to the backend' });
