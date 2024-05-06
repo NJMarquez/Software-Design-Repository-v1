@@ -3,12 +3,15 @@ const router = express.Router();
 
 const { createAdmin, adminSignIn, getAdminData, updateAdminProfile } = require('../controllers/AdminController');
 const { createCustomer, customerSignIn, getCustomerData, updateCustomerProfile } = require('../controllers/CustomerController');
+const { } = require('../controllers/ProductController');
+const { } = require('../controllers/OrderController');
 
 //const { sendVerificationCode, verifyCode, resetPassword } = require('../controllers/ForgotPasswordController');
 
 const { validateAdminSignUp, validateCustomerSignUp, userValidation, validateUserSignIn, validatePassReset } = require('../middleware/validation/users');
-
 const { isAuthAdmin, isAuthCustomer } = require('../middleware/validation/auth');
+const { } = require('../middleware/validation/order');
+const { } = require('../middleware/validation/product');
 
 router.post('/create-customer', validateCustomerSignUp, createCustomer);
 router.post('/create-admin', validateAdminSignUp, createAdmin);
