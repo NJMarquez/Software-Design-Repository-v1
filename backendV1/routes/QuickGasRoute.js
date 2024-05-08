@@ -3,15 +3,15 @@ const router = express.Router();
 
 const { createAdmin, adminSignIn, getAdminData, updateAdminProfile } = require('../controllers/AdminController');
 const { createCustomer, customerSignIn, getCustomerData, updateCustomerProfile } = require('../controllers/CustomerController');
-const { } = require('../controllers/ProductController');
-const { } = require('../controllers/OrderController');
+const { createProduct, getProduct, updateProduct, deleteProduct } = require('../controllers/ProductController');
+const { createOrder, getOrder, updateOrder, deleteOrder} = require('../controllers/OrderController');
 
 //const { sendVerificationCode, verifyCode, resetPassword } = require('../controllers/ForgotPasswordController');
 
 const { validateAdminSignUp, validateCustomerSignUp, userValidation, validateUserSignIn, validatePassReset } = require('../middleware/validation/users');
 const { isAuthAdmin, isAuthCustomer } = require('../middleware/validation/auth');
-const { } = require('../middleware/validation/order');
-const { } = require('../middleware/validation/product');
+const { validateOrder, validateOrderMiddleware } = require('../middleware/validation/order');
+const { validateProduct, validateProductMiddleware } = require('../middleware/validation/product');
 
 router.post('/create-customer', validateCustomerSignUp, createCustomer);
 router.post('/create-admin', validateAdminSignUp, createAdmin);
@@ -19,8 +19,15 @@ router.post('/create-admin', validateAdminSignUp, createAdmin);
 router.post('/customer-sign-in', validateUserSignIn, userValidation, customerSignIn);
 router.post('/admin-sign-in', validateUserSignIn, userValidation, adminSignIn);
 
+router.post('/add-order', );
+
+router.post('/add-product', );
+
 router.get('/customer-data', isAuthCustomer, getCustomerData); 
 router.get('/admin-data', isAuthAdmin, getAdminData); 
+
+router.get('/order-data', ); 
+router.get('/product-data', ); 
 
 router.post('/create-post-customer', isAuthCustomer, (req, res) => {
     res.send('Token Authentication path');
@@ -31,6 +38,11 @@ router.post('/create-post-admin', isAuthAdmin, (req, res) => {
 
 router.patch('/update-customer', isAuthCustomer, updateCustomerProfile);
 router.patch('/update-admin', isAuthAdmin, updateAdminProfile);
+
+router.patch('/update-order', )
+router.patch('/update-product', )
+
+router.delete('/delete-product', )
 
 /*
 router.post('/send-code', sendVerificationCode);
