@@ -7,19 +7,19 @@ const ProductSchema = new Schema({
         required: true
     },
     price: {
-        type: Decimal,
+        type: Number,
         required: true
     },
     quantity: {
-        type: Int,
+        type: Number,
         required: true
     },
     description: {
         type: String,
         required: true
     },
-    Rating: {
-        type: Decimal
+    rating: {
+        type: Number,
     },
 });
 
