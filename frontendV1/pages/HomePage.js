@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    backgroundColor: 'burlywood',
+    backgroundColor: 'lightcoral',
   },
   row: {
     flexDirection: 'row',

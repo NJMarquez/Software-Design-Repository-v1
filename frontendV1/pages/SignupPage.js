@@ -126,5 +126,6 @@ const styles = StyleSheet.create({
   buttonText: {
     color: "cornsilk",
     fontWeight: "bold",
+    alignSelf: 'center',
   },
 });
