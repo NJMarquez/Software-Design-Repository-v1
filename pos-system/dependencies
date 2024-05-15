@@ -1,0 +1,4 @@
+npx expo install react-dom react-native-web @expo/metro-runtime
+npm install @react-navigation/native @react-navigation/stack
+npm install expo-font
+npm install expo-app-loading
