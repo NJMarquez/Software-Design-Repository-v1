@@ -5,7 +5,7 @@ exports.createCustomer = async (req, res) => {
     try {
         console.log('Received data in createCustomer:', req.body);
 
-        const { email, username, password, fullname, contactNumber } = req.body;
+        const { email, username, password, fullname, contactNumber, address } = req.body;
 
         // Check if the email is already in use
         const isNewCustomer = await Customer.isThisEmailInUse(email);
@@ -70,7 +70,7 @@ exports.customerSignIn = async (req, res) => {
 exports.getCustomerData = async (req, res) => {
     try {
         // Get customer data from the authenticated customer
-        const customer = req.customer;
+        const customer = req.user;
 
         // Construct the response object
         const response = {
@@ -93,7 +93,7 @@ exports.getCustomerData = async (req, res) => {
 exports.updateCustomerProfile = async (req, res) => {
     try {
         // Get customer data from the authenticated customer
-        const customer = req.customer;
+        const customer = req.user;
 
         // Update the customer profile with the new data
         customer.fullname = req.body.fullname || customer.fullname;

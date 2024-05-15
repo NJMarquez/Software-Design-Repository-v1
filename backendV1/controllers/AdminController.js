@@ -69,7 +69,7 @@ exports.adminSignIn = async (req, res) => {
 exports.getAdminData = async (req, res) => {
     try {
         // Get admin data from the authenticated admin
-        const admin = req.admin;
+        const admin = req.user;
 
         // Construct the response object
         const response = {
@@ -92,7 +92,7 @@ exports.getAdminData = async (req, res) => {
 exports.updateAdminProfile = async (req, res) => {
     try {
         // Get admin data from the authenticated admin
-        const admin = req.admin;
+        const admin = req.user;
 
         // Update the admin profile with the new data
         admin.fullname = req.body.fullname || admin.fullname;

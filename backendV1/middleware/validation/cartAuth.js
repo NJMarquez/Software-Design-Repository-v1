@@ -1,30 +1,30 @@
-const jwt = require('jsonwebtoken');
-const Cart = require('../models/Cart');
+const { check, validationResult } = require('express-validator');
 
-exports.verifyCustomer = async (req, res, next) => {
-    const token = req.headers.authorization;
-    if (!token) {
-        return res.status(401).json({ message: 'Authorization token is required' });
-    }
+exports.validateCart = [
+  (req, res, next) => {
+    // Extract the customer information from the token and include it in the request object
+    const customerId = req.user.id; // Assuming the customer ID is stored in the "id" field of the user object in the request
+    req.body.customer = customerId;
+    next();
+  },
+  check('customer')
+    .notEmpty()
+    .withMessage('Customer is required.'),
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.customerId = decoded.customerId;
-        next();
-    } catch (error) {
-        return res.status(401).json({ message: 'Invalid token' });
-    }
-};
+  check('productId')
+    .notEmpty()
+    .withMessage('Product ID is required.'),
 
-exports.loadCart = async (req, res, next) => {
-    try {
-        const cart = await Cart.findOne({ customer: req.customerId });
-        if (!cart) {
-            return res.status(404).json({ message: 'Cart not found' });
-        }
-        req.cart = cart;
-        next();
-    } catch (error) {
-        return res.status(500).json({ message: 'Internal server error' });
-    }
+  check('quantity')
+    .isInt({ min: 1 })
+    .withMessage('Quantity must be a positive integer.')
+];
+
+exports.validateCartMiddleware = (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    const errorMessages = errors.array().map((error) => error.msg);
+    return res.status(400).json({ errors: errorMessages });
+  }
+  next();
 };

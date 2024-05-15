@@ -25,18 +25,12 @@ exports.createProduct = async (req, res) => {
 
 exports.getProduct = async (req, res) => {
   try {
-    const { productId } = req.params;
+    // Find all products
+    const products = await Product.find();
 
-    // Find the product by its ID
-    const product = await Product.findById(productId);
-
-    if (!product) {
-      return res.status(404).json({ success: false, message: 'Product not found' });
-    }
-
-    res.status(200).json({ success: true, product });
+    res.status(200).json({ success: true, products });
   } catch (error) {
-    console.error('Error getting product:', error);
+    console.error('Error getting products:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
   }
 };
