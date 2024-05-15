@@ -1,13 +1,29 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, FlatList } from 'react-native';
+import { useRoute } from '@react-navigation/native';
 import Header from '../components/Header';
 
 const Cart = () => {
+  const route = useRoute();
+  const { cart } = route.params;
+
+  const renderItem = ({ item }) => (
+    <View style={styles.item}>
+      <Text style={styles.text}>Brand: {item.brand}</Text>
+      <Text style={styles.text}>Weight: {item.weight}</Text>
+      <Text style={styles.text}>Quantity: {item.quantity}</Text>
+    </View>
+  );
+
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
       <Header title="Vinarao LPG Trading" />
       <View style={styles.content}>
-        
+        <FlatList
+          data={cart}
+          renderItem={renderItem}
+          keyExtractor={item => item.id.toString()}
+        />
       </View>
     </ImageBackground>
   );
@@ -26,10 +42,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
+  item: {
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    padding: 10,
+    marginVertical: 8,
+    width: '90%',
+    borderRadius: 10,
+  },
   text: {
     fontSize: 18,
     fontFamily: 'Freeman',
-    color: 'white',
+    color: '#201c1c',
   },
 });
 

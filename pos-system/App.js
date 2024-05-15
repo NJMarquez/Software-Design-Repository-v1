@@ -11,6 +11,7 @@ import Login from './screens/LoginPage';
 import UserProfile from './screens/UserProfile';
 import Cart from './screens/CartPage';
 import Checkout from './screens/CheckoutPage';
+import OrderHistory from './screens/OrderHistory';
 
 const Stack = createStackNavigator();
 
@@ -37,13 +38,14 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="UserProfile" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="CustomerHome" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="LoginPage" component={Login} />
         <Stack.Screen name="AdminHome" component={AdminHome} />
         <Stack.Screen name="CustomerHome" component={CustomerHome} />
         <Stack.Screen name="UserProfile" component={UserProfile} />
         <Stack.Screen name="CartPage" component={Cart} />
         <Stack.Screen name="CheckoutPage" component={Checkout} />
+        <Stack.Screen name="OrderHistory" component={OrderHistory} />
       </Stack.Navigator>
     </NavigationContainer>
   );
