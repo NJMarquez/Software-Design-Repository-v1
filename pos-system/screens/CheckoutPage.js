@@ -2,7 +2,7 @@ import React from 'react';
 import { View, Text, StyleSheet, ImageBackground } from 'react-native';
 import Header from '../components/Header';
 
-const AdminHome = () => {
+const Checkout = () => {
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
       <Header title="Vinarao LPG Trading" />
@@ -33,4 +33,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdminHome;
+export default Checkout;

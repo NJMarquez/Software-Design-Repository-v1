@@ -2,13 +2,13 @@ import React, { useState } from 'react';
 import { StyleSheet, View, ImageBackground, Text, TouchableOpacity, TextInput } from 'react-native';
 import Header from '../components/Header';
 
-const LoginPage = () => {
+const Login = () => {
   const [showCustomerForm, setShowCustomerForm] = useState(false);
   const [showAdminForm, setShowAdminForm] = useState(false);
 
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
-      <Header />
+      <Header title="Vinarao LPG Trading"/>
       <View style={styles.formContainer}>
         <View style={styles.accountType}>
           <Text style={{ fontFamily: 'Freeman', fontSize: 40, color: '#E95D23', alignSelf: 'center' }}>
@@ -36,9 +36,13 @@ const LoginPage = () => {
         <View style={styles.forms}>
           {showCustomerForm && (
             <View style={styles.loginForm}>
+              <Text style={{fontFamily: 'Freeman', fontSize: 40, color: '#E95D23', alignSelf: 'center'}}>Customer Login</Text>
               <TextInput style={styles.input} placeholder="Username" />
               <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-              <Text style={{font: 'JosefinSans', fontWeight: 'bold', color: 'cornsilk', alignSelf: 'center', marginTop: 100,}}>Don't have an account?</Text>
+              <TouchableOpacity style={{backgroundColor: 'green', padding: 10, width: 60, alignSelf: 'center', borderRadius: 4, marginBottom: 20}}>
+                <Text style={styles.touchableText}>Login</Text>
+              </TouchableOpacity>
+              <Text style={{font: 'JosefinSans', fontWeight: 'bold', color: 'cornsilk', alignSelf: 'center'}}>Don't have an account?</Text>
               <TouchableOpacity style={styles.createAccountButton}>
                 <Text style={styles.createAccountButtonText}>Create a New Account</Text>
               </TouchableOpacity>
@@ -46,9 +50,12 @@ const LoginPage = () => {
           )}
           {showAdminForm && (
             <View style={styles.loginForm}>
-              <Text>Admin Login</Text>
+              <Text style={{fontFamily: 'Freeman', fontSize: 40, color: '#E95D23', alignSelf: 'center'}}>Admin Login</Text>
               <TextInput style={styles.input} placeholder="Username" />
               <TextInput style={styles.input} placeholder="Password" secureTextEntry />
+              <TouchableOpacity style={{backgroundColor: 'green', padding: 10, width: 60, alignSelf: 'center', borderRadius: 4,}}>
+                <Text style={styles.touchableText}>Login</Text>
+              </TouchableOpacity>
             </View>
           )}
         </View>
@@ -69,7 +76,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     backgroundColor: 'rgba(32, 28, 28, 0.5)',
-    borderWidth: 0.5,
+    borderWidth: 0.2,
     marginVertical: 30,
     width: 1000,
     borderRadius: 4,
@@ -146,4 +153,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default LoginPage;
+export default Login;

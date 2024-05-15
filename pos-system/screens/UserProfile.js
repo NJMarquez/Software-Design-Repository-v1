@@ -1,11 +1,15 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
 import Header from '../components/Header';
 
-const AdminHome = () => {
+const UserProfile = () => {
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
-      <Header title="Vinarao LPG Trading" />
+      <Header title="Vinarao LPG Trading">
+        <TouchableOpacity style={{backgroundColor: 'green', padding: 10, width: 60, alignSelf: 'center', borderRadius: 4,}}>
+            <Text style={{fontSize: 30, fontWeight: 'bold',}}>Login</Text>
+        </TouchableOpacity>
+      </Header>
       <View style={styles.content}>
         
       </View>
@@ -33,4 +37,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default AdminHome;
+export default UserProfile;

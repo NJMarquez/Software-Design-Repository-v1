@@ -4,9 +4,13 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading';
+
 import AdminHome from './screens/AdminHome';
 import CustomerHome from './screens/CustomerHome';
-import LoginPage from './screens/LoginPage';
+import Login from './screens/LoginPage';
+import UserProfile from './screens/UserProfile';
+import Cart from './screens/CartPage';
+import Checkout from './screens/CheckoutPage';
 
 const Stack = createStackNavigator();
 
@@ -33,10 +37,13 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="LoginPage" screenOptions={{ headerShown: false }}>
-        <Stack.Screen name="LoginPage" component={LoginPage} />
+      <Stack.Navigator initialRouteName="UserProfile" screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="LoginPage" component={Login} />
         <Stack.Screen name="AdminHome" component={AdminHome} />
         <Stack.Screen name="CustomerHome" component={CustomerHome} />
+        <Stack.Screen name="UserProfile" component={UserProfile} />
+        <Stack.Screen name="CartPage" component={Cart} />
+        <Stack.Screen name="CheckoutPage" component={Checkout} />
       </Stack.Navigator>
     </NavigationContainer>
   );
