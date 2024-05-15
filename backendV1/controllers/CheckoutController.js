@@ -1,6 +1,11 @@
 const Cart = require('../models/Cart');
 const Order = require('../models/OrderNet');
+const Product = require('../models/ProductNet');
+const Customer = require('../models/CustomerNew');
 
+const moment = require('moment-timezone');
+
+// Checkout Cart Function
 exports.checkoutCart = async (req, res) => {
   try {
     // Get the cart items for the current customer
@@ -10,13 +15,42 @@ exports.checkoutCart = async (req, res) => {
       return res.status(400).json({ success: false, message: 'Cart is empty' });
     }
 
-    // Create an order with the cart items
+    // Get the customer's address
+    const customer = await Customer.findById(req.user._id);
+    if (!customer) {
+      return res.status(404).json({ success: false, message: 'Customer not found' });
+    }
+
+    // Create an order with the cart items and customer's address
+    const orderItems = cart.items.map(item => ({
+      product: item.product,
+      quantity: item.quantity,
+    }));
+
+    // Deduct the quantity of ordered products from the product listing
+    for (const item of orderItems) {
+      const product = await Product.findById(item.product);
+      if (!product) {
+        return res.status(404).json({ success: false, message: 'Product not found' });
+      }
+      if (product.quantity < item.quantity) {
+        return res.status(400).json({ success: false, message: 'Insufficient product quantity' });
+      }
+      product.quantity -= item.quantity;
+      await product.save();
+    }
+
+    // Create the order with the current date and time adjusted for the user's timezone
+    const userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    const currentDate = moment().tz(userTimezone).toDate();
     const order = new Order({
-      customer: req.user._id,
-      products: cart.items.map(item => item.product),
-      status: 'Pending', // Set initial status to 'Pending' or any other appropriate value
-      date: new Date(),
-      ref_no: generateReferenceNumber() // You can define your own function for generating reference numbers
+      customerId: req.user._id,
+      customerAddress: customer.address,
+      contactNumber: customer.contactNumber,
+      products: orderItems,
+      status: 'Pending',
+      date: currentDate,
+      ref_no: generateReferenceNumber(),
     });
 
     // Save the order
@@ -33,7 +67,8 @@ exports.checkoutCart = async (req, res) => {
   }
 };
 
+// Helper function to generate a reference number
 function generateReferenceNumber() {
-  // Define your own logic for generating reference numbers here
-  return Math.floor(100000 + Math.random() * 900000);
+  // Implement your logic to generate a unique reference number
+  return Math.floor(Math.random() * 1000000);
 }
