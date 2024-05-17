@@ -13,13 +13,13 @@ const UserProfile = () => {
     console.log('Updated Information:', { username, name, mobileNumber, address });
   };
 
-  const handleCancel = () => {
-    // Handle the cancel logic here
+  const handleReset = () => {
+    // Handle the reset logic here
     setUsername('');
     setName('');
     setMobileNumber('');
     setAddress('');
-    console.log('Update canceled');
+    console.log('Form Reset');
   };
 
   return (
@@ -72,8 +72,8 @@ const UserProfile = () => {
             <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
               <Text style={styles.updateButtonText}>Update</Text>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.cancelButton} onPress={handleCancel}>
-              <Text style={styles.cancelButtonText}>Cancel</Text>
+            <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
+              <Text style={styles.resetButtonText}>Reset</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -118,13 +118,13 @@ const styles = StyleSheet.create({
     color: 'white',
     textAlign: 'center',
   },
-  cancelButton: {
-    backgroundColor: '#dc3545',
+  resetButton: {
+    backgroundColor: '#007bff',
     paddingVertical: 12,
     paddingHorizontal: 20,
     borderRadius: 5,
   },
-  cancelButtonText: {
+  resetButtonText: {
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
