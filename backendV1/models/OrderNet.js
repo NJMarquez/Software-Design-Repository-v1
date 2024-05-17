@@ -7,6 +7,10 @@ const OrderSchema = new Schema({
     ref: 'Customer',
     required: true,
   },
+  customerName: {
+    type: String,
+    required: true,
+  },
   customerAddress: {
     type: String,
     required: true,

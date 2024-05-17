@@ -12,6 +12,7 @@ import UserProfile from './screens/UserProfile';
 import Cart from './screens/CartPage';
 import Checkout from './screens/CheckoutPage';
 import OrderHistory from './screens/OrderHistory';
+import CreateUser from './screens/CreateUser';
 
 const Stack = createStackNavigator();
 
@@ -46,6 +47,7 @@ const App = () => {
         <Stack.Screen name="CartPage" component={Cart} />
         <Stack.Screen name="CheckoutPage" component={Checkout} />
         <Stack.Screen name="OrderHistory" component={OrderHistory} />
+        <Stack.Screen name="CreateUser" component={CreateUser} />
       </Stack.Navigator>
     </NavigationContainer>
   );

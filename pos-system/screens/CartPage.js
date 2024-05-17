@@ -17,13 +17,25 @@ const Cart = () => {
 
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
-      <Header title="Vinarao LPG Trading" />
+      <Header title="Vinarao LPG Trading">
+        <TouchableOpacity onPress={() => navigation.navigate('CustomerHome', { cart })} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>User</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Logout</Text>
+        </TouchableOpacity>
+      </Header>
       <View style={styles.content}>
-        <FlatList
-          data={cart}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-        />
+        <View style={styles.list}>
+          <FlatList
+            data={cart}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+          />
+        </View>
       </View>
     </ImageBackground>
   );
@@ -53,6 +65,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Freeman',
     color: '#201c1c',
+  },
+  list: {
+    padding: 10,
+    borderWidth: 2,
   },
 });
 

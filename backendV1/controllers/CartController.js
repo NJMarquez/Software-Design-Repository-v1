@@ -1,4 +1,5 @@
 const Cart = require('../models/Cart');
+const { ObjectId } = require('mongoose').Types;
 
 exports.addToCart = async (req, res) => {
     const { customer, productId, quantity } = req.body;
@@ -33,41 +34,100 @@ exports.addToCart = async (req, res) => {
     }
   };
 
-exports.removeFromCart = async (req, res) => {
-    const { itemId } = req.params;
+  exports.removeFromCart = async (req, res) => {
+    const { itemId } = req.body;
+
     try {
-        let cart = req.cart;
-        cart.items = cart.items.filter(item => !item._id.equals(itemId));
+        // Get the customer ID from the authenticated user
+        const customerId = req.user._id;
+
+        // Find the cart for the current user
+        const cart = await Cart.findOne({ customer: customerId });
+
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found' });
+        }
+
+        // Check if the itemId is a valid ObjectId
+        if (!ObjectId.isValid(itemId)) {
+            return res.status(400).json({ message: 'Invalid itemId' });
+        }
+
+        // Convert the itemId to an ObjectId
+        const itemObjectId = new ObjectId(itemId);
+
+        // Find the index of the item in the cart
+        const itemIndex = cart.items.findIndex(item => item._id.toString() === itemObjectId.toString());
+
+        if (itemIndex === -1) {
+            return res.status(404).json({ message: 'Item not found in the cart' });
+        }
+
+        // Remove the item from the cart
+        cart.items.splice(itemIndex, 1);
+
+        // Save the updated cart
         await cart.save();
+
         res.status(200).json({ message: 'Item removed from cart successfully' });
     } catch (error) {
+        console.error('Error removing item from cart:', error);
         res.status(500).json({ message: 'Internal server error' });
     }
 };
 
 exports.updateCartItem = async (req, res) => {
-    const { itemId } = req.params;
-    const { quantity } = req.body;
-    try {
-        let cart = req.cart;
-        const index = cart.items.findIndex(item => item._id.equals(itemId));
-        if (index !== -1) {
-            cart.items[index].quantity = quantity;
-            await cart.save();
-            res.status(200).json({ message: 'Cart item updated successfully' });
-        } else {
-            res.status(404).json({ message: 'Item not found in cart' });
-        }
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
-    }
+  const { productId, quantity } = req.body;
+  try {
+      // Get the customer ID from the authenticated user
+      const customerId = req.user._id;
+
+      // Find the cart associated with the customer
+      const cart = await Cart.findOne({ customer: customerId });
+
+      if (!cart) {
+          return res.status(404).json({ message: 'Cart not found' });
+      }
+
+      // Find the index of the item in the cart
+      const itemIndex = cart.items.findIndex(item => item.product.toString() === productId);
+
+      if (itemIndex !== -1) {
+          // Update the quantity of the existing item
+          cart.items[itemIndex].quantity = quantity;
+          await cart.save();
+          res.status(200).json({ message: 'Cart item updated successfully' });
+      } else {
+          // Add a new item to the cart
+          const newCartItem = {
+              product: productId,
+              quantity: quantity
+          };
+          cart.items.push(newCartItem);
+          await cart.save();
+          res.status(201).json({ message: 'Cart item added successfully' });
+      }
+  } catch (error) {
+      console.error('Error updating cart item:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
 };
 
 exports.getCartContents = async (req, res) => {
-    try {
-        const cart = req.cart;
-        res.status(200).json(cart);
-    } catch (error) {
-        res.status(500).json({ message: 'Internal server error' });
-    }
+  try {
+      // Get the customer ID from the authenticated user
+      const customerId = req.user._id;
+
+      // Find the cart associated with the customer
+      const cart = await Cart.findOne({ customer: customerId }).populate('items.product');
+
+      if (!cart) {
+          return res.status(404).json({ message: 'Cart not found' });
+      }
+
+      res.status(200).json(cart);
+  } catch (error) {
+      console.error('Error getting cart contents:', error);
+      res.status(500).json({ message: 'Internal server error' });
+  }
 };

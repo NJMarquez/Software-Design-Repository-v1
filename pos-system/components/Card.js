@@ -21,19 +21,22 @@ const Card = ({ tank, addToCart }) => {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
     borderRadius: 10,
     padding: 15,
     margin: 10,
     alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 10,
-    shadowOffset: { width: 0, height: 5 },
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 15,
+    height: 340,
+    width: 200,
   },
   image: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     marginBottom: 10,
   },
   brand: {
@@ -42,8 +45,8 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
+    borderWidth: 2,
+    borderColor: '#000',
     borderRadius: 5,
     padding: 5,
     width: 50,

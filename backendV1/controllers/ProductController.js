@@ -2,7 +2,7 @@ const Product = require('../models/ProductNet');
 
 exports.createProduct = async (req, res) => {
   try {
-    const { name, price, quantity, description, rating } = req.body;
+    const { name, price, quantity, description } = req.body;
 
     // Create a new product with the provided data
     const product = new Product({
@@ -10,7 +10,8 @@ exports.createProduct = async (req, res) => {
       price,
       quantity,
       description,
-      rating,
+      ratings: [],
+      averageRating: 0,
     });
 
     // Save the product to the database
@@ -37,13 +38,12 @@ exports.getProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   try {
-    const { productId } = req.params;
-    const { name, price, quantity, description, rating } = req.body;
+    const { _id, name, price, quantity, description } = req.body;
 
     // Find the product by its ID and update its properties
     const product = await Product.findByIdAndUpdate(
-      productId,
-      { name, price, quantity, description, rating },
+      _id,
+      { name, price, quantity, description },
       { new: true }
     );
 
@@ -60,10 +60,10 @@ exports.updateProduct = async (req, res) => {
 
 exports.deleteProduct = async (req, res) => {
   try {
-    const { productId } = req.params;
+    const { _id } = req.body;
 
     // Find the product by its ID and delete it
-    const product = await Product.findByIdAndDelete(productId);
+    const product = await Product.findByIdAndDelete(_id);
 
     if (!product) {
       return res.status(404).json({ success: false, message: 'Product not found' });
@@ -73,5 +73,43 @@ exports.deleteProduct = async (req, res) => {
   } catch (error) {
     console.error('Error deleting product:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
+  }
+};
+
+exports.rateProduct = async (req, res) => {
+  try {
+    const { _id, rating } = req.body;
+
+    // Validate the rating value
+    if (rating < 1 || rating > 5) {
+      return res.status(400).json({ success: false, message: 'Rating must be between 1 and 5' });
+    }
+
+    // Find the product by its ID
+    const product = await Product.findById(_id);
+
+    if (!product) {
+      return res.status(404).json({ success: false, message: 'Product not found' });
+    }
+
+    // Initialize the ratings array if it doesn't exist
+    if (!product.ratings) {
+      product.ratings = [];
+    }
+
+    // Update the product's rating
+    product.ratings.push(rating);
+
+    // Calculate the new average rating
+    const totalRatings = product.ratings.reduce((sum, r) => sum + r, 0);
+    product.averageRating = totalRatings / product.ratings.length;
+
+    // Save the updated product
+    await product.save();
+
+    res.status(200).json({ success: true, product });
+  } catch (error) {
+    console.error('Error rating product:', error);
+    res.status(500).json({ success: false, message: 'An error occurred while rating the product' });
   }
 };

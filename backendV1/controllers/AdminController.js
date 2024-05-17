@@ -91,25 +91,20 @@ exports.getAdminData = async (req, res) => {
 
 exports.updateAdminProfile = async (req, res) => {
     try {
-        // Get admin data from the authenticated admin
-        const admin = req.user;
+        const userId = req.user._id;
+        const updateData = req.body; // You may want to add validation for allowed fields
 
-        // Update the admin profile with the new data
-        admin.fullname = req.body.fullname || admin.fullname;
-        admin.contactNumber = req.body.contactNumber || admin.contactNumber;
-
-        // Save the updated admin profile
-        await admin.save();
+        // Update admin profile in the database
+        const admin = await Admin.findByIdAndUpdate(userId, updateData, { new: true, select: 'email username fullname contactNumber' });
 
         // Construct the response object
         const response = {
             success: true,
-            message: 'Admin profile updated successfully.',
-            admin: {
+            user: {
                 email: admin.email,
                 username: admin.username,
                 fullname: admin.fullname,
-                contactNumber: admin.contactNumber,
+                contactNumber: admin.contactNumber
             },
         };
 

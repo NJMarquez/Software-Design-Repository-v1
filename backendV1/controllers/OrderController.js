@@ -77,21 +77,20 @@ exports.getCustomerOrders = async (req, res) => {
 
 exports.updateOrder = async (req, res) => {
   try {
-    const { orderId } = req.params;
-    const { date, status, ref_no } = req.body;
+    const { _id, status } = req.body;
 
-    // Find the order by its ID and update its properties
-    const order = await Order.findByIdAndUpdate(
-      orderId,
-      { date, status, ref_no },
-      { new: true }
+    // Find the order by its _id and update the status
+    const updatedOrder = await Order.findOneAndUpdate(
+      { _id }, // query
+      { status }, // update
+      { new: true } // return the updated document
     );
 
-    if (!order) {
+    if (!updatedOrder) {
       return res.status(404).json({ success: false, message: 'Order not found' });
     }
 
-    res.status(200).json({ success: true, order });
+    res.status(200).json({ success: true, order: updatedOrder });
   } catch (error) {
     console.error('Error updating order:', error);
     res.status(500).json({ success: false, message: 'Internal server error' });
