@@ -23,9 +23,16 @@ app.use(cors({
 app.use(express.json());
 app.use(Router);
 
-app.get('/', (req, res) => {
-  res.json({ success: true, message: 'Welcome to the backend' });
-});
+app.get('/', async (req, res) => {
+    try {
+      const response = await axios.get('https://api.ipify.org?format=json');
+      const publicIPAddress = response.data.ip;
+      res.json({ success: true, message: 'Welcome to the backend', publicIPAddress });
+    } catch (error) {
+      console.error('Error getting public IP address:', error);
+      res.status(500).json({ message: 'Error getting public IP address' });
+    }
+  });
 
 app.listen(port, () => {
   console.log('Port is listening.');
