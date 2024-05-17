@@ -1,6 +1,5 @@
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/AdminNew');
-const bcrypt = require('bcrypt');
 
 exports.createAdmin = async (req, res) => {
     try {
@@ -94,13 +93,6 @@ exports.updateAdminProfile = async (req, res) => {
     try {
         const userId = req.user._id;
         const updateData = req.body; // You may want to add validation for allowed fields
-
-        // Check if password is being updated
-        if (updateData.password) {
-            // Hash the new password
-            const hashedPassword = await bcrypt.hash(updateData.password, 8);
-            updateData.password = hashedPassword;
-        }
 
         // Update admin profile in the database
         const admin = await Admin.findByIdAndUpdate(userId, updateData, { new: true, select: 'email username fullname contactNumber' });
