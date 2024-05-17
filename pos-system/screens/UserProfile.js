@@ -38,36 +38,45 @@ const UserProfile = () => {
       <ScrollView contentContainerStyle={styles.scrollContent}>
         <View style={styles.content}>
           <Text style={styles.profileText}>User Profile</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Username"
-            placeholderTextColor="#aaa"
-            value={username}
-            onChangeText={setUsername}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Name"
-            placeholderTextColor="#aaa"
-            value={name}
-            onChangeText={setName}
-          />
-          <TextInput
-            style={styles.input}
-            placeholder="Mobile Number"
-            placeholderTextColor="#aaa"
-            value={mobileNumber}
-            onChangeText={setMobileNumber}
-            keyboardType="phone-pad"
-          />
-          <TextInput
-            style={[styles.input, styles.textArea]}
-            placeholder="Address"
-            placeholderTextColor="#aaa"
-            value={address}
-            onChangeText={setAddress}
-            multiline
-          />
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Username</Text>
+            <TextInput
+              style={styles.input}
+              value={username}
+              onChangeText={setUsername}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Name</Text>
+            <TextInput
+              style={styles.input}
+              value={name}
+              onChangeText={setName}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Mobile Number</Text>
+            <TextInput
+              style={styles.input}
+              value={mobileNumber}
+              onChangeText={setMobileNumber}
+              keyboardType="phone-pad"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Address</Text>
+            <TextInput
+              style={[styles.input, styles.textArea]}
+              value={address}
+              onChangeText={setAddress}
+              multiline
+            />
+          </View>
+
           <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
               <Text style={styles.updateButtonText}>Update</Text>
@@ -100,6 +109,28 @@ const styles = StyleSheet.create({
     padding: 20,
     backgroundColor: 'rgba(0, 0, 0, 0.5)',
     borderRadius: 10,
+  },
+  inputContainer: {
+    marginBottom: 15,
+  },
+  label: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 5,
+  },
+  input: {
+    width: '100%',
+    padding: 10,
+    borderColor: '#ccc',
+    borderWidth: 1,
+    borderRadius: 5,
+    backgroundColor: 'white',
+    color: 'black',
+  },
+  textArea: {
+    height: 80,
+    textAlignVertical: 'top',
   },
   buttonContainer: {
     flexDirection: 'row',
@@ -136,20 +167,6 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: 'white',
     textAlign: 'center',
-  },
-  input: {
-    width: '100%',
-    padding: 10,
-    marginVertical: 8,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 5,
-    backgroundColor: 'white',
-    color: 'black',
-  },
-  textArea: {
-    height: 80,
-    textAlignVertical: 'top',
   },
   headerButton: {
     marginHorizontal: 10,
