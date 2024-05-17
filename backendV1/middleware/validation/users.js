@@ -1,3 +1,4 @@
+// For Password Reset
 const {check, validationResult } = require('express-validator');
 
 exports.validateCustomerSignUp = [
