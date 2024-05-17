@@ -17,7 +17,17 @@ const Cart = () => {
 
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
-      <Header title="Vinarao LPG Trading" />
+      <Header title="Vinarao LPG Trading">
+        <TouchableOpacity onPress={() => navigation.navigate('CustomerHome', { cart })} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>User</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Logout</Text>
+        </TouchableOpacity>
+      </Header>
       <View style={styles.content}>
         <View style={styles.list}>
           <FlatList

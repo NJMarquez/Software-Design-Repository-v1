@@ -39,11 +39,11 @@ const Login = () => {
               <Text style={{fontFamily: 'Freeman', fontSize: 40, color: '#E95D23', alignSelf: 'center'}}>Customer Login</Text>
               <TextInput style={styles.input} placeholder="Username" />
               <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-              <TouchableOpacity style={{backgroundColor: 'green', padding: 10, width: 60, alignSelf: 'center', borderRadius: 4, marginBottom: 20}}>
+              <TouchableOpacity onPress={() => navigation.navigate('CustomerHome')} style={{backgroundColor: 'green', padding: 10, width: 60, alignSelf: 'center', borderRadius: 4, marginBottom: 20}}>
                 <Text style={styles.touchableText}>Login</Text>
               </TouchableOpacity>
               <Text style={{font: 'JosefinSans', fontWeight: 'bold', color: 'cornsilk', alignSelf: 'center'}}>Don't have an account?</Text>
-              <TouchableOpacity style={styles.createAccountButton}>
+              <TouchableOpacity onPress={() => navigation.navigate('CreateUser')} style={styles.createAccountButton}>
                 <Text style={styles.createAccountButtonText}>Create a New Account</Text>
               </TouchableOpacity>
             </View>
@@ -53,7 +53,7 @@ const Login = () => {
               <Text style={{fontFamily: 'Freeman', fontSize: 40, color: '#E95D23', alignSelf: 'center'}}>Admin Login</Text>
               <TextInput style={styles.input} placeholder="Username" />
               <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-              <TouchableOpacity style={{backgroundColor: 'green', padding: 10, width: 60, alignSelf: 'center', borderRadius: 4,}}>
+              <TouchableOpacity onPress={() => navigation.navigate('AdminHome')} style={{backgroundColor: 'green', padding: 10, width: 60, alignSelf: 'center', borderRadius: 4,}}>
                 <Text style={styles.touchableText}>Login</Text>
               </TouchableOpacity>
             </View>
