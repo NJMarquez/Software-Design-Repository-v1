@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { createAdmin, adminSignIn, getAdminData, updateAdminProfile } = require('../controllers/AdminController');
 const { createCustomer, customerSignIn, getCustomerData, updateCustomerProfile } = require('../controllers/CustomerController');
-const { createProduct, getProduct, updateProduct, deleteProduct } = require('../controllers/ProductController');
+const { createProduct, getProduct, updateProduct, deleteProduct, rateProduct } = require('../controllers/ProductController');
 const { updateOrder, deleteOrder, getAdminOrders, getCustomerOrders} = require('../controllers/OrderController');
 const { addToCart, removeFromCart, getCartContents, updateCartItem } = require('../controllers/CartController');
 const { checkoutCart } = require('../controllers/CheckoutController');
@@ -27,9 +27,17 @@ router.post('/create-customer', validateCustomerSignUp, createCustomer); //Worki
 router.post('/customer-sign-in', validateUserSignIn, userValidation, customerSignIn); //Working
 router.get('/customer-data', isAuthCustomer, getCustomerData); //Working
 router.post('/checkout', isAuthCustomer, checkoutCart); //Working
+router.patch('/rate-product', isAuthCustomer, rateProduct);
 router.get('/customer/orders', isAuthCustomer, getCustomerOrders); //Working
 router.get('/product-data-customer', isAuthCustomer, getProduct); //Working
-router.patch('/update-customer', isAuthCustomer, updateCustomerProfile);
+router.patch('/update-customer', isAuthCustomer, updateCustomerProfile); //Working
+
+//Customer Cart
+router.post('/add-to-cart', isAuthCustomer, validateCart, validateCartMiddleware, addToCart); //Working
+router.delete('/remove-from-cart', isAuthCustomer, removeFromCart); //Working
+router.patch('/update-cart-item', isAuthCustomer, updateCartItem ); //Working
+router.get('/cart-contents', isAuthCustomer, getCartContents); //Working
+
 
 //Admin
 router.post('/create-admin', validateAdminSignUp, createAdmin); //Working
@@ -38,22 +46,14 @@ router.post('/add-product', createProduct, validateProduct, validateProductMiddl
 router.get('/admin-data', isAuthAdmin, getAdminData); //Working
 router.get('/admin/orders', isAuthAdmin, getAdminOrders); //Working
 router.get('/product-data-admin', isAuthAdmin, getProduct); //Working
-router.patch('/update-admin', isAuthAdmin, updateAdminProfile);
-router.patch('/update-order', isAuthAdmin, updateOrder);
-router.patch('/update-product', isAuthAdmin, updateProduct);
-router.delete('/delete-product', isAuthAdmin, deleteProduct);
+router.patch('/update-admin', isAuthAdmin, updateAdminProfile); //Working
+router.patch('/update-order', isAuthAdmin, updateOrder); //Working
+router.patch('/update-product', isAuthAdmin, updateProduct); //Working
+router.delete('/delete-product', isAuthAdmin, deleteProduct); //Working
+
 //router.delete('/delete-order', isAuthAdmin, deleteOrder);
 
-//Customer Cart
-router.post('/add-to-cart', isAuthCustomer, validateCart, validateCartMiddleware, addToCart);
-router.delete('/remove-from-cart/:itemId', );
-router.patch('/update-cart-item/:itemId', );
-router.get('/cart-contents', );
-
-
-
-
-
+//Password Reset Function
 /*
 router.post('/send-code', sendVerificationCode);
 router.post('/verify-code', verifyCode);

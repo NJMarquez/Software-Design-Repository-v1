@@ -45,6 +45,7 @@ exports.checkoutCart = async (req, res) => {
     const currentDate = moment().tz(userTimezone).toDate();
     const order = new Order({
       customerId: req.user._id,
+      customerName: customer.fullname,
       customerAddress: customer.address,
       contactNumber: customer.contactNumber,
       products: orderItems,

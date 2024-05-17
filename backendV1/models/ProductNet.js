@@ -18,8 +18,11 @@ const ProductSchema = new Schema({
         type: String,
         required: true
     },
-    rating: {
-        type: Number,
+    ratings: [
+        { type: Number, min: 1, max: 5 }
+    ],
+    averageRating: { 
+        type: Number, min: 1, max: 5 
     },
 });
 

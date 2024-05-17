@@ -1,5 +1,7 @@
 const jwt = require('jsonwebtoken');
 const Customer = require('../models/CustomerNew');
+const Cart = require('../models/Cart');
+const bcrypt = require('bcrypt');
 
 exports.createCustomer = async (req, res) => {
     try {
@@ -32,7 +34,17 @@ exports.createCustomer = async (req, res) => {
 
         console.log('Customer created successfully:', customer);
 
-        res.json({ success: true, customer });
+        // Create a new cart for the customer
+        const cart = new Cart({
+            customer: customer._id,
+        });
+
+        // Save the cart to the database
+        await cart.save();
+
+        console.log('Cart created successfully:', cart);
+
+        res.json({ success: true, customer, cart });
     } catch (error) {
         console.error('Error creating customer account:', error);
         res.status(500).json({ message: 'Internal server error', success: false });
@@ -92,22 +104,23 @@ exports.getCustomerData = async (req, res) => {
 
 exports.updateCustomerProfile = async (req, res) => {
     try {
-        // Get customer data from the authenticated customer
-        const customer = req.user;
+        const userId = req.user._id;
+        const updateData = req.body; 
 
-        // Update the customer profile with the new data
-        customer.fullname = req.body.fullname || customer.fullname;
-        customer.contactNumber = req.body.contactNumber || customer.contactNumber;
-        customer.address = req.body.address || customer.address;
+        // Check if password is being updated
+        if (updateData.password) {
+            // Hash the new password
+            const hashedPassword = await bcrypt.hash(updateData.password, 8);
+            updateData.password = hashedPassword;
+        }
 
-        // Save the updated customer profile
-        await customer.save();
+        // Update admin profile in the database
+        const customer = await Customer.findByIdAndUpdate(userId, updateData, { new: true, select: 'email username fullname contactNumber address' });
 
         // Construct the response object
         const response = {
             success: true,
-            message: 'Customer profile updated successfully.',
-            customer: {
+            user: {
                 email: customer.email,
                 username: customer.username,
                 fullname: customer.fullname,
@@ -122,4 +135,5 @@ exports.updateCustomerProfile = async (req, res) => {
         res.status(500).json({ success: false, message: 'Internal server error' });
     }
 };
+  
 
