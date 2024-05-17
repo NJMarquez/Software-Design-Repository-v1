@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, ScrollView, TouchableOpacity, Modal, TextInput, Button } from 'react-native';
+import { View, Text, StyleSheet, ImageBackground, ScrollView, TouchableOpacity, Modal, TextInput } from 'react-native';
 import Header from '../components/Header';
 import tanks from '../data'; // Assuming product data is imported from data file
 
@@ -47,7 +47,7 @@ const AdminHome = () => {
             </View>
           ))}
           <TouchableOpacity onPress={toggleModal} style={styles.addButton}>
-            <Text style={styles.addButtonText}>+</Text>
+            <Text style={{fontSize:30}}>+</Text>
           </TouchableOpacity>
         </View>
         <View style={styles.sectionTitleContainer}>
@@ -77,8 +77,12 @@ const AdminHome = () => {
           />
           {/* Add input for image selection if needed */}
           <View style={styles.buttonContainer}>
-            <Button title="Cancel" onPress={toggleModal} color="red" />
-            <Button title="Add Product" onPress={addNewProduct} />
+            <TouchableOpacity style={styles.modalButton} onPress={toggleModal}>  
+            <Text style={styles.modalTextButton}>Cancel</Text> 
+            </TouchableOpacity>
+            <TouchableOpacity style={styles.modalButton} onPress={addNewProduct}>
+            <Text style={styles.modalTextButton}>Add Product</Text> 
+            </TouchableOpacity>
           </View>
         </View>
       </Modal>
@@ -109,14 +113,14 @@ const styles = StyleSheet.create({
   sectionTitleContainer: {
     alignContent: 'center',
     paddingHorizontal: 20,
-    paddingVertical: 5,
+    paddingVertical: 10,
     backgroundColor: "black",
     borderRadius: 5,
+    marginBottom: 20
   },
   sectionTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
     color: "#fff",
   },
   productsContainer: {
@@ -124,7 +128,7 @@ const styles = StyleSheet.create({
     flexWrap: 'wrap',
     justifyContent: 'center',
     paddingBottom: 40,
-    width: "70%"
+    width: "60%"
   },
   card: {
     backgroundColor: '#fff',
@@ -160,29 +164,40 @@ const styles = StyleSheet.create({
     marginTop: 35,
     marginLeft: 20
   },
-  addButtonText: {
-    fontSize: 30,
+  modalTextButton: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'black',
+  },
+  modalButton: {
+    backgroundColor: '#E95D23',
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+    borderRadius: 5,
   },
   modalContainer: {
-    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    backgroundColor: 'papayawhip',
+    width: 700,
+    height: 400,
+    alignSelf: "center",
+    marginTop: 120,
+    borderRadius: 10,
   },
   input: {
     borderWidth: 3,
     borderColor: '#ccc',
     borderRadius: 5,
     padding: 10,
-    width: '15%',
+    width: '25%',
     marginBottom: 20,
-    color: "#fff",
+    color: "black",
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '15%',
-    paddingTop: 50
+    paddingTop: 30,
+    gap: 20,
   },
 });
 
