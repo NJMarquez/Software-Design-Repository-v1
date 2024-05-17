@@ -53,7 +53,7 @@ const Login = () => {
               <Text style={{fontFamily: 'Freeman', fontSize: 40, color: '#E95D23', alignSelf: 'center'}}>Admin Login</Text>
               <TextInput style={styles.input} placeholder="Username" />
               <TextInput style={styles.input} placeholder="Password" secureTextEntry />
-              <TouchableOpacity onPress={() => navigation.navigate('AdminHome')} style={{backgroundColor: 'green', padding: 10, width: 60, alignSelf: 'center', borderRadius: 4,}}>
+              <TouchableOpacity onPress={() => navigation.navigate('AdminHome')} style={styles.loginbutton}>
                 <Text style={styles.touchableText}>Login</Text>
               </TouchableOpacity>
             </View>
@@ -150,6 +150,13 @@ const styles = StyleSheet.create({
     color: '#E95D23',
     fontWeight: 'bold',
     fontFamily: 'JosefinSans',
+  },
+  loginbutton: {
+    backgroundColor: 'green',
+    padding: 10,
+    width: 60,
+    alignSelf: 'center',
+    borderRadius: 4,
   },
 });
 

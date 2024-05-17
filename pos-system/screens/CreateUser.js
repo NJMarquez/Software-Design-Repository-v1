@@ -5,17 +5,7 @@ import Header from '../components/Header';
 const CreateUser = () => {
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
-      <Header title="Vinarao LPG Trading">
-        <TouchableOpacity onPress={() => navigation.navigate('CartPage', { cart })} style={styles.headerButton}>
-          <Text style={styles.headerButtonText}>Cart</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('CustomerHome')} style={styles.headerButton}>
-          <Text style={styles.headerButtonText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
-          <Text style={styles.headerButtonText}>Logout</Text>
-        </TouchableOpacity>
-      </Header>
+      <Header title="Vinarao LPG Trading" />
       <View style={styles.content}>
         
       </View>
@@ -35,19 +25,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  text: {
-    fontSize: 18,
-    fontFamily: 'Freeman',
-    color: 'white',
-  },
-  headerButton: {
-    marginHorizontal: 10,
-  },
-  headerButtonText: {
-    fontSize: 18,
-    color: '#fff',
-    fontFamily: 'JosefinSans',
   },
 });
 
