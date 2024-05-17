@@ -1,6 +1,20 @@
 const express  = require('express');
 const router = express.Router();
 
+const axios = require('axios');
+// Route to return the public IP address
+router.get('/public-ip', async (req, res) => {
+  try {
+    const response = await axios.get('https://api.ipify.org?format=json');
+    const publicIPAddress = response.data.ip;
+    res.json({ publicIPAddress });
+  } catch (error) {
+    console.error('Error getting public IP address:', error);
+    res.status(500).json({ message: 'Error getting public IP address' });
+  }
+});
+
+
 const { createAdmin, adminSignIn, getAdminData, updateAdminProfile } = require('../controllers/AdminController');
 const { createCustomer, customerSignIn, getCustomerData, updateCustomerProfile } = require('../controllers/CustomerController');
 const { createProduct, getProduct, updateProduct, deleteProduct, rateProduct } = require('../controllers/ProductController');
