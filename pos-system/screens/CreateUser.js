@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, ImageBackground } from 'react-native';
 import Header from '../components/Header';
 
 const CreateUser = () => {

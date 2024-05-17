@@ -106,7 +106,7 @@ const tanks = [
     },
     {
       id: 16,
-      weight: '55kg',
+      weight: '50kg',
       brand: 'Shine Gas',
       image: require('./assets/shinegas50.png'),
       price: '₱4000',
