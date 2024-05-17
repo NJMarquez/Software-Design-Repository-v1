@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, ImageBackground, Button, ScrollView, Alert, TouchableOpacity, Text } from 'react-native';
+import { View, StyleSheet, ImageBackground, ScrollView, Alert, TouchableOpacity, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import tanks from '../data';
@@ -23,13 +23,18 @@ const CustomerHome = () => {
         <TouchableOpacity onPress={() => navigation.navigate('CartPage', { cart })} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>Cart</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('UserPage')} style={styles.headerButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>User</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Logout</Text>
         </TouchableOpacity>
       </Header>
       <View style={styles.tabContainer}>
         {['2.7kg', '11kg', '22kg', '50kg'].map(weight => (
-          <Button key={weight} title={weight} onPress={() => setSelectedWeight(weight)} />
+          <TouchableOpacity key={weight} onPress={() => setSelectedWeight(weight)} style={styles.tabButton}>
+            <Text style={styles.tabButtonText}>{weight}</Text>
+          </TouchableOpacity>
         ))}
       </View>
       <ScrollView contentContainerStyle={styles.content}>
@@ -37,7 +42,6 @@ const CustomerHome = () => {
           <Card key={tank.id} tank={tank} addToCart={addToCart} />
         ))}
       </ScrollView>
-      <Button title="Go to Cart" onPress={() => navigation.navigate('CartPage', { cart })} />
     </ImageBackground>
   );
 };
@@ -55,11 +59,27 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     marginVertical: 10,
     gap: 10,
+    padding: 5,
+    backgroundColor: 'rgba(255, 255, 255, 0.6)',
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 15,
+    marginTop: 60,
   },
   content: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    alignContent: 'center',
     justifyContent: 'center',
+    borderRadius: 4,
+    height: 500,
+    width: 950,
+    marginVertical: 20,
+    backgroundColor: 'rgba(32, 28, 28, 0.66)',
+    gap: 20,
   },
   headerButton: {
     marginHorizontal: 10,
@@ -67,6 +87,22 @@ const styles = StyleSheet.create({
   headerButtonText: {
     fontSize: 18,
     color: '#fff',
+    fontFamily: 'JosefinSans',
+  },
+  tabButton: {
+    padding: 10,
+    backgroundColor: '#ddd',
+    borderRadius: 5,
+    width: 200,
+    alignItems: 'center',
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.32,
+    shadowRadius: 5.46,
+    elevation: 15,
+  },
+  tabButtonText: {
+    fontSize: 16,
     fontFamily: 'JosefinSans',
   },
   text: {

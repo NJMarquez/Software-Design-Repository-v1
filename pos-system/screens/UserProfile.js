@@ -6,8 +6,14 @@ const UserProfile = () => {
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
       <Header title="Vinarao LPG Trading">
-        <TouchableOpacity style={{backgroundColor: 'green', padding: 10, width: 60, alignSelf: 'center', borderRadius: 4,}}>
-            <Text style={{fontSize: 30, fontWeight: 'bold',}}>Login</Text>
+        <TouchableOpacity onPress={() => navigation.navigate('CartPage', { cart })} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Cart</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('CustomerHome')} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Logout</Text>
         </TouchableOpacity>
       </Header>
       <View style={styles.content}>
@@ -34,6 +40,14 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Freeman',
     color: 'white',
+  },
+  headerButton: {
+    marginHorizontal: 10,
+  },
+  headerButtonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontFamily: 'JosefinSans',
   },
 });
 
