@@ -38,12 +38,12 @@ exports.getProduct = async (req, res) => {
 
 exports.updateProduct = async (req, res) => {
   try {
-    const { _id, name, price, quantity, description, rating } = req.body;
+    const { _id, name, price, quantity, description } = req.body;
 
     // Find the product by its ID and update its properties
     const product = await Product.findByIdAndUpdate(
       _id,
-      { name, price, quantity, description, rating },
+      { name, price, quantity, description },
       { new: true }
     );
 
