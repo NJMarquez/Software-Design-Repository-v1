@@ -17,7 +17,7 @@ const Cart = () => {
   );
 
   const handleCheckout = () => {
-    navigation.navigate('Checkout', { cart });
+    navigation.navigate('CheckoutPage', { cart });
   };
 
   return (
@@ -80,9 +80,6 @@ const styles = StyleSheet.create({
   list: {
     padding: 10,
     alignItems: 'center',
-  },
-  headerButtons: {
-    flexDirection: 'row',
   },
   headerButton: {
     marginLeft: 10,
