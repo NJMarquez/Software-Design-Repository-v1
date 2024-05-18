@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, ScrollView, TouchableOpacity, Modal, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 import tanks from '../data'; // Assuming product data is imported from data file
 
@@ -8,6 +9,7 @@ const AdminHome = () => {
   const [pendingOrders, setPendingOrders] = useState([]); // State for managing pending orders
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [newProduct, setNewProduct] = useState({ brand: '', weight: '', image: null });
+  const navigation = useNavigation();
 
   // Function to delete product by ID
   const deleteProduct = (id) => {
