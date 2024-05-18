@@ -39,7 +39,7 @@ const App = () => {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="UserProfile" screenOptions={{ headerShown: false }}>
+      <Stack.Navigator initialRouteName="LoginPage" screenOptions={{ headerShown: false }}>
         <Stack.Screen name="LoginPage" component={Login} />
         <Stack.Screen name="AdminHome" component={AdminHome} />
         <Stack.Screen name="CustomerHome" component={CustomerHome} />
