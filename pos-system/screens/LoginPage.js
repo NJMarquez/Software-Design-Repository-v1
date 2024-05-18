@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { StyleSheet, View, ImageBackground, Text, TouchableOpacity, TextInput } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 
 const Login = () => {
   const [showCustomerForm, setShowCustomerForm] = useState(false);
   const [showAdminForm, setShowAdminForm] = useState(false);
+  const navigation = useNavigation();
 
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
