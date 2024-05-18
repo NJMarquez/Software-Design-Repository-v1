@@ -5,20 +5,24 @@ import Header from '../components/Header';
 const UserProfile = () => {
   const [username, setUsername] = useState('');
   const [name, setName] = useState('');
-  const [mobileNumber, setMobileNumber] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
   const [address, setAddress] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleUpdate = () => {
     // Handle the update logic here
-    console.log('Updated Information:', { username, name, mobileNumber, address });
+    console.log('Updated Information:', { username, name, contactNumber, address, email, password });
   };
 
   const handleReset = () => {
     // Handle the reset logic here
     setUsername('');
     setName('');
-    setMobileNumber('');
+    setContactNumber('');
     setAddress('');
+    setEmail('');
+    setPassword('');
     console.log('Form Reset');
   };
 
@@ -58,11 +62,11 @@ const UserProfile = () => {
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Mobile Number</Text>
+            <Text style={styles.label}>Contact Number</Text>
             <TextInput
               style={styles.input}
-              value={mobileNumber}
-              onChangeText={setMobileNumber}
+              value={contactNumber}
+              onChangeText={setContactNumber}
               keyboardType="phone-pad"
             />
           </View>
@@ -74,6 +78,26 @@ const UserProfile = () => {
               value={address}
               onChangeText={setAddress}
               multiline
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Email</Text>
+            <TextInput
+              style={styles.input}
+              value={email}
+              onChangeText={setEmail}
+              keyboardType="email-address"
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Password</Text>
+            <TextInput
+              style={styles.input}
+              value={password}
+              onChangeText={setPassword}
+              secureTextEntry
             />
           </View>
 
