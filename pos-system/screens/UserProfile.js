@@ -42,6 +42,9 @@ const UserProfile = ({ navigation }) => {
         <TouchableOpacity onPress={() => navigation.navigate('CartPage')} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>Cart</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('OrderHistory')} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Orders</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('CustomerHome')} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>Home</Text>
         </TouchableOpacity>

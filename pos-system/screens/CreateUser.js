@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, StyleSheet, ImageBackground, TextInput, TouchableOpacity, Alert, ScrollView, Text } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 
 const CreateUser = () => {
@@ -9,16 +10,14 @@ const CreateUser = () => {
   const [address, setAddress] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigation = useNavigation();
 
   const handleSubmit = () => {
     Alert.alert('User Info', `Username: ${username}\nFull Name: ${fullName}\nContact Number: ${contactNumber}\nAddress: ${address}\nEmail: ${email}`);
     // Here, you would normally handle form submission, such as sending the data to a server.
+    navigation.navigate('CustomerHome')
   };
 
-  const handleSignIn = () => {
-    Alert.alert('Sign In', 'Redirect to Sign In screen');
-    // Here, you would normally handle the navigation to the sign-in screen.
-  };
 
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
@@ -72,10 +71,7 @@ const CreateUser = () => {
             placeholderTextColor="#aaa"
           />
           <TouchableOpacity style={styles.button} onPress={handleSubmit}>
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.signInButton]} onPress={handleSignIn}>
-            <Text style={styles.buttonText}>Sign In</Text>
+            <Text style={styles.buttonText}>Create Account</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
