@@ -1,45 +1,55 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, StyleSheet, ImageBackground, TouchableOpacity, TextInput } from 'react-native';
 import Header from '../components/Header';
 
-const UserProfile = () => {
-  const [username, setUsername] = useState('');
-  const [name, setName] = useState('');
-  const [contactNumber, setContactNumber] = useState('');
-  const [address, setAddress] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+const UserProfile = ({ navigation }) => {
+  const [username, setUsername] = useState('currentUsername'); // Replace with actual current value
+  const [name, setName] = useState('currentName'); // Replace with actual current value
+  const [password, setPassword] = useState(''); // Password should not be pre-filled
+  const [mobileNumber, setMobileNumber] = useState('currentMobileNumber'); // Replace with actual current value
+  const [address, setAddress] = useState('currentAddress'); // Replace with actual current value
+  const [isModified, setIsModified] = useState(false);
+
+  useEffect(() => {
+    // Logic to populate the fields with current user data
+    // For example, you could fetch the data from an API and set the state variables
+  }, []);
 
   const handleUpdate = () => {
     // Handle the update logic here
-    console.log('Updated Information:', { username, name, contactNumber, address, email, password });
+    console.log('Updated Information:', { username, name, password, mobileNumber, address });
   };
 
   const handleReset = () => {
     // Handle the reset logic here
-    setUsername('');
-    setName('');
-    setContactNumber('');
-    setAddress('');
-    setEmail('');
+    setUsername('currentUsername'); // Reset to actual current value
+    setName('currentName'); // Reset to actual current value
     setPassword('');
+    setMobileNumber('currentMobileNumber'); // Reset to actual current value
+    setAddress('currentAddress'); // Reset to actual current value
+    setIsModified(false);
     console.log('Form Reset');
+  };
+
+  const handleInputChange = (setter) => (value) => {
+    setter(value);
+    setIsModified(true);
   };
 
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
       <Header title="Vinarao LPG Trading">
-        <TouchableOpacity onPress={() => navigation.navigate('CartPage', { cart })} style={styles.headerButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('CartPage')} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>Cart</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('CustomerHome')} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>Home</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
+        <TouchableOpacity onPress={() => navigation.navigate('LoginPage')} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>Logout</Text>
         </TouchableOpacity>
       </Header>
-      <ScrollView contentContainerStyle={styles.scrollContent}>
+      <View style={styles.viewContent}>
         <View style={styles.content}>
           <Text style={styles.profileText}>User Profile</Text>
 
@@ -48,7 +58,7 @@ const UserProfile = () => {
             <TextInput
               style={styles.input}
               value={username}
-              onChangeText={setUsername}
+              onChangeText={handleInputChange(setUsername)}
             />
           </View>
 
@@ -57,16 +67,26 @@ const UserProfile = () => {
             <TextInput
               style={styles.input}
               value={name}
-              onChangeText={setName}
+              onChangeText={handleInputChange(setName)}
             />
           </View>
 
           <View style={styles.inputContainer}>
-            <Text style={styles.label}>Contact Number</Text>
+            <Text style={styles.label}>Password</Text>
             <TextInput
               style={styles.input}
-              value={contactNumber}
-              onChangeText={setContactNumber}
+              value={password}
+              onChangeText={handleInputChange(setPassword)}
+              secureTextEntry={true}
+            />
+          </View>
+
+          <View style={styles.inputContainer}>
+            <Text style={styles.label}>Mobile Number</Text>
+            <TextInput
+              style={styles.input}
+              value={mobileNumber}
+              onChangeText={handleInputChange(setMobileNumber)}
               keyboardType="phone-pad"
             />
           </View>
@@ -76,33 +96,17 @@ const UserProfile = () => {
             <TextInput
               style={[styles.input, styles.textArea]}
               value={address}
-              onChangeText={setAddress}
+              onChangeText={handleInputChange(setAddress)}
               multiline
             />
           </View>
 
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Email</Text>
-            <TextInput
-              style={styles.input}
-              value={email}
-              onChangeText={setEmail}
-              keyboardType="email-address"
-            />
-          </View>
-
-          <View style={styles.inputContainer}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.input}
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-            />
-          </View>
-
           <View style={styles.buttonContainer}>
-            <TouchableOpacity style={styles.updateButton} onPress={handleUpdate}>
+            <TouchableOpacity
+              style={[styles.updateButton, !isModified && styles.disabledButton]}
+              onPress={handleUpdate}
+              disabled={!isModified}
+            >
               <Text style={styles.updateButtonText}>Update</Text>
             </TouchableOpacity>
             <TouchableOpacity style={styles.resetButton} onPress={handleReset}>
@@ -110,7 +114,7 @@ const UserProfile = () => {
             </TouchableOpacity>
           </View>
         </View>
-      </ScrollView>
+      </View>
     </ImageBackground>
   );
 };
@@ -123,16 +127,17 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  scrollContent: {
-    flexGrow: 1,
+  viewContent: {
+    flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
   content: {
-    width: '90%',
-    padding: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    width: 600,
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     borderRadius: 10,
+    paddingHorizontal: 40,
+    paddingVertical: 20,
   },
   inputContainer: {
     marginBottom: 15,
@@ -149,7 +154,7 @@ const styles = StyleSheet.create({
     borderColor: '#ccc',
     borderWidth: 1,
     borderRadius: 5,
-    backgroundColor: 'white',
+    backgroundColor: 'grey',
     color: 'black',
   },
   textArea: {
@@ -158,8 +163,9 @@ const styles = StyleSheet.create({
   },
   buttonContainer: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginTop: 20,
+    gap: 50,
   },
   updateButton: {
     backgroundColor: '#28a745',
@@ -191,6 +197,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     color: 'white',
     textAlign: 'center',
+    paddingHorizontal: 10,
   },
   headerButton: {
     marginHorizontal: 10,
@@ -199,6 +206,9 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#fff',
     fontFamily: 'JosefinSans',
+  },
+  disabledButton: {
+    backgroundColor: 'grey',
   },
 });
 
