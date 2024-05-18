@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, FlatList } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, Text, StyleSheet, ImageBackground, FlatList, TouchableOpacity } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 
 const Cart = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const { cart } = route.params;
 
   const renderItem = ({ item }) => (
@@ -18,15 +19,17 @@ const Cart = () => {
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
       <Header title="Vinarao LPG Trading">
-        <TouchableOpacity onPress={() => navigation.navigate('CustomerHome', { cart })} style={styles.headerButton}>
-          <Text style={styles.headerButtonText}>Home</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.headerButton}>
-          <Text style={styles.headerButtonText}>User</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
-          <Text style={styles.headerButtonText}>Logout</Text>
-        </TouchableOpacity>
+        <View style={styles.headerButtons}>
+          <TouchableOpacity onPress={() => navigation.navigate('CustomerHome', { cart })} style={styles.headerButton}>
+            <Text style={styles.headerButtonText}>Home</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.headerButton}>
+            <Text style={styles.headerButtonText}>User</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
+            <Text style={styles.headerButtonText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
       </Header>
       <View style={styles.content}>
         <View style={styles.list}>
@@ -51,6 +54,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -67,8 +71,19 @@ const styles = StyleSheet.create({
     color: '#201c1c',
   },
   list: {
+    width: '100%',
     padding: 10,
-    borderWidth: 2,
+  },
+  headerButtons: {
+    flexDirection: 'row',
+  },
+  headerButton: {
+    marginLeft: 10,
+    padding: 10,
+  },
+  headerButtonText: {
+    fontSize: 16,
+    color: 'white',
   },
 });
 
