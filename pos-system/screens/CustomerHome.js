@@ -23,8 +23,11 @@ const CustomerHome = () => {
         <TouchableOpacity onPress={() => navigation.navigate('CartPage', { cart })} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>Cart</Text>
         </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('OrderHistory')} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Orders</Text>
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.headerButton}>
-          <Text style={styles.headerButtonText}>User</Text>
+          <Text style={styles.headerButtonText}>Profile</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
           <Text style={styles.headerButtonText}>Logout</Text>

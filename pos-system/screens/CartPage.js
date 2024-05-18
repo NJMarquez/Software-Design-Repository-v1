@@ -23,17 +23,18 @@ const Cart = () => {
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
       <Header title="Vinarao LPG Trading">
-        <View style={styles.headerButtons}>
-          <TouchableOpacity onPress={() => navigation.navigate('CustomerHome', { cart })} style={styles.headerButton}>
-            <Text style={styles.headerButtonText}>Home</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.headerButton}>
-            <Text style={styles.headerButtonText}>User</Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
-            <Text style={styles.headerButtonText}>Logout</Text>
-          </TouchableOpacity>
-        </View>
+        <TouchableOpacity onPress={() => navigation.navigate('CustomerHome', { cart })} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Home</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('OrderHistory')} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Orders</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('UserProfile')} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Profile</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.navigate('LoginPage', { cart })} style={styles.headerButton}>
+          <Text style={styles.headerButtonText}>Logout</Text>
+        </TouchableOpacity>
       </Header>
       <View style={styles.content}>
         <FlatList
