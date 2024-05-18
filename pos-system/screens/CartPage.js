@@ -86,8 +86,9 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   headerButtonText: {
-    fontSize: 16,
+    fontSize: 18,
     color: 'white',
+    fontFamily: 'JosefinSans',
   },
   checkoutButton: {
     position: 'absolute',
