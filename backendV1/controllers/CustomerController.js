@@ -1,5 +1,7 @@
+const jwt = require('jsonwebtoken');
 const Customer = require('../models/CustomerNew');
 const Cart = require('../models/Cart');
+const bcrypt = require('bcrypt');
 
 exports.createCustomer = async (req, res) => {
     try {
@@ -66,8 +68,10 @@ exports.customerSignIn = async (req, res) => {
         if (!isMatch) {
             return res.json({ success: false, message: 'Username/Password is incorrect.' });
         }
+        // Generate and send a token if the login is successful
+        const token = jwt.sign({ customerId: customer._id }, process.env.JWT_SECRET, { expiresIn: '1d' });
 
-        res.json({ success: true, customer });
+        res.json({ success: true, customer, token });
     } catch (error) {
         console.error('Error during customer login:', error);
         res.status(500).json({ success: false, message: 'Internal server error' });
@@ -102,7 +106,14 @@ exports.updateCustomerProfile = async (req, res) => {
         const userId = req.user._id;
         const updateData = req.body; 
 
-        // Update admin profile in the database
+         // Check if password is being updated
+         if (updateData.password) {
+            // Hash the new password
+            const hashedPassword = await bcrypt.hash(updateData.password, 8);
+            updateData.password = hashedPassword;
+        }
+
+        // Update customer profile in the database
         const customer = await Customer.findByIdAndUpdate(userId, updateData, { new: true, select: 'email username fullname contactNumber address' });
 
         // Construct the response object

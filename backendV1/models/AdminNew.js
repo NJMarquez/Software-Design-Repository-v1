@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 const Schema = mongoose.Schema;
 
 const AdminSchema = new Schema({
@@ -24,11 +25,23 @@ const AdminSchema = new Schema({
     },
 });
 
+AdminSchema.pre('save', function(next) {
+    if(this.isModified('password')){
+        bcrypt.hash(this.password, 8, (err, hash) => {
+            if(err) return next(err);
+
+            this.password = hash;
+            next();
+        })
+    }
+})
+
 AdminSchema.methods.comparePassword = async function (password) {
     if (!password) throw new Error('The password cannot be compared because it is missing.');
   
     try {
-      return this.password === password;
+      const result = await bcrypt.compare(password, this.password);
+      return result;
     } catch (error) {
       console.log('Error while comparing password.', error.message);
       return false; // Return false if an error occurs during comparison
