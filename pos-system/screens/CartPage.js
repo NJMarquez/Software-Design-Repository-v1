@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, StyleSheet, ImageBackground, FlatList } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import { View, Text, StyleSheet, ImageBackground, FlatList, TouchableOpacity } from 'react-native';
+import { useRoute, useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
 
 const Cart = () => {
   const route = useRoute();
+  const navigation = useNavigation();
   const { cart } = route.params;
 
   const renderItem = ({ item }) => (
@@ -54,6 +55,7 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
+    width: '100%',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -70,8 +72,19 @@ const styles = StyleSheet.create({
     color: '#201c1c',
   },
   list: {
+    width: '100%',
     padding: 10,
-    borderWidth: 2,
+  },
+  headerButtons: {
+    flexDirection: 'row',
+  },
+  headerButton: {
+    marginLeft: 10,
+    padding: 10,
+  },
+  headerButtonText: {
+    fontSize: 16,
+    color: 'white',
   },
 });
 
