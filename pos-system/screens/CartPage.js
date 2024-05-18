@@ -16,6 +16,10 @@ const Cart = () => {
     </View>
   );
 
+  const handleCheckout = () => {
+    navigation.navigate('Checkout', { cart });
+  };
+
   return (
     <ImageBackground source={require('../assets/bgilpg.png')} style={styles.background}>
       <Header title="Vinarao LPG Trading">
@@ -32,14 +36,16 @@ const Cart = () => {
         </View>
       </Header>
       <View style={styles.content}>
-        <View style={styles.list}>
-          <FlatList
-            data={cart}
-            renderItem={renderItem}
-            keyExtractor={item => item.id.toString()}
-          />
-        </View>
+        <FlatList
+          data={cart}
+          renderItem={renderItem}
+          keyExtractor={item => item.id.toString()}
+          contentContainerStyle={styles.list}
+        />
       </View>
+      <TouchableOpacity style={styles.checkoutButton} onPress={handleCheckout}>
+        <Text style={styles.checkoutButtonText}>Checkout</Text>
+      </TouchableOpacity>
     </ImageBackground>
   );
 };
@@ -71,8 +77,8 @@ const styles = StyleSheet.create({
     color: '#201c1c',
   },
   list: {
-    width: '100%',
     padding: 10,
+    alignItems: 'center',
   },
   headerButtons: {
     flexDirection: 'row',
@@ -84,6 +90,26 @@ const styles = StyleSheet.create({
   headerButtonText: {
     fontSize: 16,
     color: 'white',
+  },
+  checkoutButton: {
+    position: 'absolute',
+    bottom: 20,
+    right: 20,
+    backgroundColor: '#ff5722',
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    alignItems: 'center',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 5 },
+    shadowOpacity: 0.3,
+    shadowRadius: 5,
+    elevation: 5,
+  },
+  checkoutButtonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
   },
 });
 
