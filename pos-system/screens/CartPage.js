@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, StyleSheet, ImageBackground, FlatList, TouchableOpacity } from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native';
 import Header from '../components/Header';
@@ -6,13 +6,23 @@ import Header from '../components/Header';
 const Cart = () => {
   const route = useRoute();
   const navigation = useNavigation();
-  const { cart } = route.params;
+  const [cart, setCart] = useState(route.params.cart);
+
+  const deleteItem = (id) => {
+    const updatedCart = cart.filter(item => item.id !== id);
+    setCart(updatedCart);
+  };
 
   const renderItem = ({ item }) => (
-    <View style={styles.item}>
-      <Text style={styles.text}>Brand: {item.brand}</Text>
-      <Text style={styles.text}>Weight: {item.weight}</Text>
-      <Text style={styles.text}>Quantity: {item.quantity}</Text>
+    <View style={styles.itemContainer}>
+      <View style={styles.item}>
+        <TouchableOpacity style={styles.deleteButton} onPress={() => deleteItem(item.id)}>
+          <Text style={styles.deleteButtonText}>X</Text>
+        </TouchableOpacity>
+        <Text style={styles.text}>Brand: {item.brand}</Text>
+        <Text style={styles.text}>Weight: {item.weight}</Text>
+        <Text style={styles.text}>Quantity: {item.quantity}</Text>
+      </View>
     </View>
   );
 
@@ -37,16 +47,20 @@ const Cart = () => {
         </TouchableOpacity>
       </Header>
       <View style={styles.content}>
-        <FlatList
-          data={cart}
-          renderItem={renderItem}
-          keyExtractor={item => item.id.toString()}
-          contentContainerStyle={styles.list}
-        />
+        <View style={styles.flatlistcon}>
+          <FlatList
+            data={cart}
+            renderItem={renderItem}
+            keyExtractor={item => item.id.toString()}
+            contentContainerStyle={styles.list}
+            numColumns={3}
+            showsVerticalScrollIndicator={false}
+          />
+        </View>
+        <TouchableOpacity style={styles.checkoutButton} onPress={handleCheckout}>
+          <Text style={styles.checkoutButtonText}>Checkout</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity style={styles.checkoutButton} onPress={handleCheckout}>
-        <Text style={styles.checkoutButtonText}>Checkout</Text>
-      </TouchableOpacity>
     </ImageBackground>
   );
 };
@@ -61,25 +75,46 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    width: '100%',
-    justifyContent: 'center',
-    alignItems: 'center',
+    width: 500,
+    alignContent: 'center',
+    backgroundColor: 'rgba(20 , 19, 14, 0.6)',
+    borderRadius: 2,
+    marginVertical: 10,
+  },
+  itemContainer: {
+    flex: 1,
+    margin: 5,
+    alignContent: 'flex-start',
+    width: 90,
+    height: 120,
   },
   item: {
-    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    backgroundColor: '#fff',
     padding: 10,
-    marginVertical: 8,
-    width: '90%',
     borderRadius: 10,
+    position: 'relative',
+  },
+  deleteButton: {
+    position: 'absolute',
+    top: 5,
+    right: 5,
+    backgroundColor: '#ff5722',
+    borderRadius: 10,
+    padding: 5,
+  },
+  deleteButtonText: {
+    color: '#fff',
+    fontWeight: 'bold',
   },
   text: {
-    fontSize: 18,
+    fontSize: 14,
     fontFamily: 'Freeman',
     color: '#201c1c',
   },
   list: {
     padding: 10,
     alignItems: 'center',
+    marginRight: 5,
   },
   headerButton: {
     marginLeft: 10,
@@ -91,9 +126,8 @@ const styles = StyleSheet.create({
     fontFamily: 'JosefinSans',
   },
   checkoutButton: {
-    position: 'absolute',
-    bottom: 20,
-    right: 20,
+    alignSelf: 'center',
+    width: 300,
     backgroundColor: '#ff5722',
     paddingVertical: 15,
     paddingHorizontal: 30,
@@ -109,6 +143,15 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#fff',
     fontWeight: 'bold',
+    alignSelf: 'center',
+  },
+  flatlistcon: {
+    padding: 10,
+    marginVertical: 10,
+    marginHorizontal: 15,
+    borderWidth: 5,
+    height: 530,
+    borderRadius: 2,
   },
 });
 
